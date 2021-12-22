@@ -1,0 +1,2 @@
+0 2 * * *   cd /headers/southwest-headers/ && env/bin/python southwest-headers.py /headers/southwest_headers.json
+
