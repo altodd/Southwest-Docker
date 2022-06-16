@@ -16,7 +16,6 @@ RUN BROWSER_MAJOR=$(google-chrome --version | sed 's/Google Chrome \([0-9]*\).*/
     wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${BROWSER_MAJOR} -O chrome_version && \
     wget https://chromedriver.storage.googleapis.com/`cat chrome_version`/chromedriver_linux64.zip && \
     unzip chromedriver_linux64.zip && \
-    mv chromedriver /usr/local/bin/ && \
     rm chromedriver_linux64.zip && \
     DRIVER_MAJOR=$(chromedriver --version | sed 's/ChromeDriver \([0-9]*\).*/\1/g') && \
     echo "chrome version: $BROWSER_MAJOR" && \
