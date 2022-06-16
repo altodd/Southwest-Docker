@@ -12,7 +12,16 @@ COPY southwest-headers southwest-headers
 WORKDIR southwest-headers
 RUN pip3 install virtualenv && virtualenv env
 RUN env/bin/pip install -r requirements.txt
-RUN wget https://chromedriver.storage.googleapis.com/96.0.4664.45/chromedriver_linux64.zip && unzip chromedriver_linux64.zip && rm chromedriver_linux64.zip
+RUN BROWSER_MAJOR=$(google-chrome --version | sed 's/Google Chrome \([0-9]*\).*/\1/g') && \
+    wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${BROWSER_MAJOR} -O chrome_version && \
+    wget https://chromedriver.storage.googleapis.com/`cat chrome_version`/chromedriver_linux64.zip && \
+    unzip chromedriver_linux64.zip && \
+    mv chromedriver /usr/local/bin/ && \
+    rm chromedriver_linux64.zip && \
+    DRIVER_MAJOR=$(chromedriver --version | sed 's/ChromeDriver \([0-9]*\).*/\1/g') && \
+    echo "chrome version: $BROWSER_MAJOR" && \
+    echo "chromedriver version: $DRIVER_MAJOR" && \
+    if [ $BROWSER_MAJOR != $DRIVER_MAJOR ]; then echo "VERSION MISMATCH"; exit 1; fi
 RUN export RAND=$(tr -dc A-Za-z < /dev/urandom | head -c 3) && perl -pi -e 's/cdc_/$ENV{RAND}_/g' chromedriver
 #We will install the crontab, but have the command run on startup of the container to generate first header when started
 COPY southwest-cron /etc/cron.d/southwest-cron
