@@ -1,0 +1,25 @@
+From 860dabdb605fef919f11af6b153fb1c9985c1d0b Mon Sep 17 00:00:00 2001
+From: Aaron Todd <git@aaron-todd.com>
+Date: Sun, 23 Apr 2023 17:32:37 +0000
+Subject: [PATCH] Set version 109
+
+---
+ southwest-headers.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/southwest-headers.py b/southwest-headers.py
+index 194972c..5bf624d 100644
+--- a/southwest-headers.py
++++ b/southwest-headers.py
+@@ -19,7 +19,7 @@ first_name = ''.join(random.choices(string.ascii_lowercase, k=random.randrange(4
+ last_name = ''.join(random.choices(string.ascii_lowercase, k=random.randrange(4,10))).capitalize()
+ output_file = sys.argv[1] if len(sys.argv) > 1 else "southwest_headers.json"
+ 
+-driver = uc.Chrome(headless = True)
++driver = uc.Chrome(headless = True, version_main=109)
+ driver.scopes = [ "page\/check-in" ]    # only capture request URLs matching this regex
+ 
+ driver.get("https://mobile.southwest.com/check-in")
+-- 
+2.34.1
+

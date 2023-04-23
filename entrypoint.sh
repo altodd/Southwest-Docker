@@ -2,8 +2,8 @@
 set -e
 
 if [ "$1" != "/bin/sh" ]; then
-	service atd start
-	service cron start
+	sudo service atd start
+	sudo service cron start
 	cd /headers/southwest-headers/
 	env/bin/python southwest-headers.py /headers/southwest_headers.json
 	autoluv "$@"
