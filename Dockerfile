@@ -27,7 +27,7 @@ RUN sudo apt update && sudo apt install -y python3 python3-pip fonts-liberation 
 #Set up the headers project
 WORKDIR /headers
 ARG CHROME_VERSION=109.0.5414.119-1
-RUN wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb
+RUN sudo wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb
 RUN sudo dpkg -i google-chrome-stable_${CHROME_VERSION}_amd64.deb; sudo apt-get -f install -y && rm google-chrome-stable_${CHROME_VERSION}_amd64.deb
 COPY southwest-headers southwest-headers
 COPY 0001-Set-version-109.patch southwest-headers
@@ -58,5 +58,6 @@ COPY .autoluv.env /home/$USERNAME/.autoluv.env
 RUN sudo gem install autoluv
 
 COPY entrypoint.sh /home/$USERNAME/entrypoint.sh
-RUN sudo chmod +x /home/$USERNAME/entrypoint.sh
+RUN sudo chmod +rx /home/$USERNAME/entrypoint.sh
+RUN sudo chmod a+w /var/lib/gems/2.7.0/gems/autoluv-*/
 ENTRYPOINT ["/home/swuser/entrypoint.sh"]
