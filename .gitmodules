@@ -1,0 +1,6 @@
+[submodule "southwest-headers"]
+	path = southwest-headers
+	url = git@github.com:byalextran/southwest-headers.git
+[submodule "southwest-checkin"]
+	path = southwest-checkin
+	url = git@github.com:byalextran/southwest-checkin.git
