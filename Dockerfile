@@ -28,7 +28,7 @@ RUN sudo apt update && sudo apt install -y python3 python3-pip fonts-liberation 
 WORKDIR /headers
 ARG CHROME_VERSION=109.0.5414.119-1
 RUN sudo wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb
-RUN sudo dpkg -i google-chrome-stable_${CHROME_VERSION}_amd64.deb; sudo apt-get -f install -y && rm google-chrome-stable_${CHROME_VERSION}_amd64.deb
+RUN sudo dpkg -i google-chrome-stable_${CHROME_VERSION}_amd64.deb; sudo apt-get -f install -y && sudo rm google-chrome-stable_${CHROME_VERSION}_amd64.deb
 COPY southwest-headers southwest-headers
 COPY 0001-Set-version-109.patch southwest-headers
 RUN sudo chown -R $USERNAME:$USERNAME southwest-headers
@@ -41,7 +41,8 @@ RUN BROWSER_MAJOR=$(google-chrome --version | sed 's/Google Chrome \([0-9]*\).*/
     wget https://chromedriver.storage.googleapis.com/`cat chrome_version`/chromedriver_linux64.zip && \
     unzip chromedriver_linux64.zip && \
     rm chromedriver_linux64.zip && \
-    DRIVER_MAJOR=$(chromedriver --version | sed 's/ChromeDriver \([0-9]*\).*/\1/g') && \
+    sudo chmod +x chromedriver && \
+    DRIVER_MAJOR=$(./chromedriver --version | sed 's/ChromeDriver \([0-9]*\).*/\1/g') && \
     echo "chrome version: $BROWSER_MAJOR" && \
     echo "chromedriver version: $DRIVER_MAJOR" && \
     if [ $BROWSER_MAJOR != $DRIVER_MAJOR ]; then echo "VERSION MISMATCH"; exit 1; fi
